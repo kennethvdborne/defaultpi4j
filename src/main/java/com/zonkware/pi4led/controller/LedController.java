@@ -11,9 +11,9 @@ public class LedController {
 
     private final GpioController gpio = GpioFactory.getInstance();
     private final GpioPinDigitalInput myButton1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
-    private final GpioPinDigitalOutput led1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyLED", PinState.HIGH);
+    private final GpioPinDigitalOutput led1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyLED", PinState.LOW);
     private final GpioPinDigitalInput myButton2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_03, PinPullResistance.PULL_DOWN);
-    private final GpioPinDigitalOutput led2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "MyLED", PinState.HIGH);
+    private final GpioPinDigitalOutput led2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "MyLED", PinState.LOW);
 
     public LedController() {
         initialize();
@@ -35,7 +35,7 @@ public class LedController {
             @Override
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
                 try {
-                    onOff(led2);
+                    onOff(led1, led2);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -43,10 +43,16 @@ public class LedController {
         });
     }
 
-    public void onOff(GpioPinDigitalOutput led) throws InterruptedException {
+    public void onOff(GpioPinDigitalOutput l1, GpioPinDigitalOutput l2) throws InterruptedException {
         for (int i = 0; i < 4; i++) {
-            led.toggle();
-            Thread.sleep(200);
+            for (int x = 0; x < 8; x++) {
+                l1.toggle();
+                Thread.sleep(400);
+            }
+            for (int y = 0; y < 8; y++) {
+                l2.toggle();
+                Thread.sleep(400);
+            }
         }
     }
 
