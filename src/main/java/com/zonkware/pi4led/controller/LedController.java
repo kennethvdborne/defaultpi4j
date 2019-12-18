@@ -43,6 +43,24 @@ public class LedController {
                 }
             }
         });
+        try {
+            startup();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void startup() throws InterruptedException {
+        for (int i = 0; i < 3; i++) {
+            led2.toggle();
+            led1.toggle();
+            Thread.sleep(400);
+        }
+        for (int i = 0; i < 8; i++) {
+            led2.toggle();
+            led1.toggle();
+            Thread.sleep(100);
+        }
     }
 
     public void onOff(GpioPinDigitalOutput l1, GpioPinDigitalOutput l2) throws InterruptedException {
