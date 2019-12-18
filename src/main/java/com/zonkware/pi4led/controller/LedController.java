@@ -27,7 +27,9 @@ public class LedController {
         myButton1.addListener(new GpioPinListenerDigital() {
             @Override
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                led1.toggle();
+                if (event.getState().isLow()){
+                    led1.toggle();
+                }
                 System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
             }
         });
@@ -44,16 +46,14 @@ public class LedController {
     }
 
     public void onOff(GpioPinDigitalOutput l1, GpioPinDigitalOutput l2) throws InterruptedException {
+        System.out.println("Looping started");
         for (int i = 0; i < 4; i++) {
-            for (int x = 0; x < 8; x++) {
-                l1.toggle();
-                Thread.sleep(400);
-            }
-            for (int y = 0; y < 8; y++) {
-                l2.toggle();
-                Thread.sleep(400);
-            }
+            l1.toggle();
+            Thread.sleep(100);
+            l2.toggle();
+            Thread.sleep(300);
         }
+        System.out.println("Looping Ended");
     }
 
     @RequestMapping("/")
