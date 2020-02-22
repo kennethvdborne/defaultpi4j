@@ -26,6 +26,8 @@ public class LedController {
 
     public int x = 0;
     public List<GpioPin> list = new ArrayList<GpioPin>();
+    GpioPinDigitalOutput led = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21);
+
 
 
     public void initialize() {
@@ -40,6 +42,7 @@ public class LedController {
                 @Override
                 public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
                     System.out.println("--- Button pressed ---" + event.getPin());
+                    led.blink(2);
                 }
             });
             list.add(button);
