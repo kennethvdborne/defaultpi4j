@@ -26,24 +26,12 @@ public class LedController {
 
     public int x = 0;
     public List<GpioPin> list = new ArrayList<GpioPin>();
-    GpioPinDigitalOutput led = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21, "myLed", PinState.LOW);
-
-
 
 
     public void initialize() {
         for (int i = 0; i < 32; i++) {
 
-            led.blink(200);
-
-            led.addListener(new GpioPinListenerDigital() {
-                @Override
-                public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                    System.out.println("--- Led should be blinking ---" + event.getPin());
-                }
-            });
-
-            if (i!=21) {
+            if (i==25) {
                 Pin pin = RaspiPin.getPinByAddress(i);
                 PinMode mode = PinMode.DIGITAL_INPUT;
                 GpioPin button = gpio.provisionPin(pin, mode);
@@ -52,12 +40,36 @@ public class LedController {
                     @Override
                     public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
                         System.out.println("--- Button pressed ---" + event.getPin());
-                        led.toggle();
+                        for (GpioPin g: list
+                             ) {
+                            if (g.getMode().equals(PinMode.DIGITAL_OUTPUT)){
+                                GpioPinDigitalOutput gout =(GpioPinDigitalOutput)g;
+                                ((GpioPinDigitalOutput) g).toggle();
+                            }
+
+                        }
                     }
                 });
                 list.add(button);
                 x++;
                 System.out.println("--- Button created " + button.getPin());
+            }
+
+            else {
+                Pin pin = RaspiPin.getPinByAddress(i);
+                PinMode mode = PinMode.DIGITAL_OUTPUT;
+                GpioPin led = gpio.provisionPin(pin, mode);
+                //button.setShutdownOptions(true);
+                led.addListener(new GpioPinListenerDigital() {
+                    @Override
+                    public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+                        System.out.println("--- LED ---" + event.getPin());
+                    }
+                });
+                list.add(led);
+                x++;
+                System.out.println("--- LED created " + led.getPin());
+
             }
         }
 
