@@ -33,21 +33,22 @@ public class LedController {
     public void initialize() {
         for (int i = 0; i < 32; i++) {
 
-
-            Pin pin = RaspiPin.getPinByAddress(i);
-            PinMode mode = PinMode.DIGITAL_INPUT;
-            GpioPin button = gpio.provisionPin(pin, mode);
-            //button.setShutdownOptions(true);
-            button.addListener(new GpioPinListenerDigital() {
-                @Override
-                public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                    System.out.println("--- Button pressed ---" + event.getPin());
-                    led.blink(2);
-                }
-            });
-            list.add(button);
-            x++;
-            System.out.println("--- Button created " + button.getPin());
+            if (i!=21) {
+                Pin pin = RaspiPin.getPinByAddress(i);
+                PinMode mode = PinMode.DIGITAL_INPUT;
+                GpioPin button = gpio.provisionPin(pin, mode);
+                //button.setShutdownOptions(true);
+                button.addListener(new GpioPinListenerDigital() {
+                    @Override
+                    public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+                        System.out.println("--- Button pressed ---" + event.getPin());
+                        led.blink(2);
+                    }
+                });
+                list.add(button);
+                x++;
+                System.out.println("--- Button created " + button.getPin());
+            }
         }
 
 /*
