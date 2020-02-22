@@ -26,12 +26,15 @@ public class LedController {
 
     public int x = 0;
     public List<GpioPin> list = new ArrayList<GpioPin>();
-    GpioPinDigitalOutput led = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21);
+    GpioPinDigitalOutput led = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_21, "myLed", PinState.LOW);
+
 
 
 
     public void initialize() {
         for (int i = 0; i < 32; i++) {
+
+            led.blink(200);
 
             led.addListener(new GpioPinListenerDigital() {
                 @Override
