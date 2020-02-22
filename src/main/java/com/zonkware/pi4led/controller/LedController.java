@@ -29,7 +29,7 @@ public class LedController {
 
 
     public void initialize() {
-        for (int i = 0; i < 24; i++) {
+        for (int i = 0; i < 31; i++) {
 
 
             Pin pin = RaspiPin.getPinByAddress(i);
@@ -38,12 +38,12 @@ public class LedController {
             button.addListener(new GpioPinListenerDigital() {
                 @Override
                 public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                    System.out.println("--- Button pressed " + x);
+                    System.out.println("--- Button pressed ---" + event.toString());
                 }
             });
             list.add(button);
             x++;
-            System.out.println("--- Button created " + x);
+            System.out.println("--- Button created " + button.getPin());
         }
 
 /*
