@@ -12,43 +12,34 @@ import java.io.Console;
 public class LedController {
 
     private final GpioController gpio = GpioFactory.getInstance();
-   // private final GpioPinDigitalInput myButton1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
-   // private final GpioPinDigitalOutput led1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyLED", PinState.LOW);
-    private final GpioPinDigitalInput myButton2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00);
-    private final GpioPinDigitalInput myButton3 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_07);
-   // private final GpioPinDigitalOutput led2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07);
+    // private final GpioPinDigitalInput myButton1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
+    // private final GpioPinDigitalOutput led1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyLED", PinState.LOW);
+    // private final GpioPinDigitalInput myButton2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00);
+    // private final GpioPinDigitalInput myButton3 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_07);
+    // private final GpioPinDigitalOutput led2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07);
 
     public LedController() {
         initialize();
     }
 
-    public void initialize(){
+    public int x = 0;
 
-        myButton2.setShutdownOptions(true);
-        //led2.setShutdownOptions(true);
+    public void initialize() {
+        for (int i = 0; i < 24; i++) {
 
-        myButton2.addListener(new GpioPinListenerDigital() {
-            @Override
-            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                //onOff(led2);
-                System.out.println("button pressed 2");
-            }
-        });
-        myButton3.addListener(new GpioPinListenerDigital() {
-            @Override
-            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                //onOff(led2);
-                System.out.println("button pressed 3");
-            }
-        });
-        /*
-        try {
-            startup();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            Pin pin = RaspiPin.getPinByAddress(i);
+            GpioPinDigitalInput button = gpio.provisionDigitalInputPin(pin);
+            button.setShutdownOptions(true);
+            button.addListener(new GpioPinListenerDigital() {
+                @Override
+                public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+                    System.out.println("--- Button pressed " + x);
+                }
+            });
+            x++;
+            System.out.println("--- Button created " + x);
         }
-        */
-    }
+
 /*
     private void startup() throws InterruptedException {
         System.out.println("startupsequence");
@@ -81,4 +72,5 @@ public class LedController {
         return "OK";
     }
 */
+    }
 }
