@@ -29,16 +29,16 @@ public class LedController {
 
 
     public void initialize() {
-        for (int i = 0; i < 31; i++) {
+        for (int i = 0; i < 32; i++) {
 
 
             Pin pin = RaspiPin.getPinByAddress(i);
             GpioPinDigitalOutput button = gpio.provisionDigitalOutputPin(pin);
-            button.setShutdownOptions(true);
+            //button.setShutdownOptions(true);
             button.addListener(new GpioPinListenerDigital() {
                 @Override
                 public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                    System.out.println("--- Button pressed ---" + event.toString());
+                    System.out.println("--- Button pressed ---" + event.getPin());
                 }
             });
             list.add(button);
