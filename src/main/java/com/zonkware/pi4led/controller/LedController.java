@@ -33,7 +33,7 @@ public class LedController {
 
 
             Pin pin = RaspiPin.getPinByAddress(i);
-            GpioPinDigitalInput button = gpio.provisionDigitalInputPin(pin);
+            GpioPinDigitalOutput button = gpio.provisionDigitalOutputPin(pin);
             button.setShutdownOptions(true);
             button.addListener(new GpioPinListenerDigital() {
                 @Override
