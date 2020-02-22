@@ -33,6 +33,13 @@ public class LedController {
     public void initialize() {
         for (int i = 0; i < 32; i++) {
 
+            led.addListener(new GpioPinListenerDigital() {
+                @Override
+                public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+                    System.out.println("--- Led should be blinking ---" + event.getPin());
+                }
+            });
+
             if (i!=21) {
                 Pin pin = RaspiPin.getPinByAddress(i);
                 PinMode mode = PinMode.DIGITAL_INPUT;
@@ -42,7 +49,7 @@ public class LedController {
                     @Override
                     public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
                         System.out.println("--- Button pressed ---" + event.getPin());
-                        led.blink(2);
+                        led.toggle();
                     }
                 });
                 list.add(button);
