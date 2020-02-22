@@ -44,7 +44,10 @@ public class LedController {
                              ) {
                             if (g.getMode().equals(PinMode.DIGITAL_OUTPUT)){
                                 GpioPinDigitalOutput gout =(GpioPinDigitalOutput)g;
-                                ((GpioPinDigitalOutput) g).toggle();
+                                if (gout.getState().isHigh()){
+                                    gout.setState(PinState.LOW);
+                                }
+                                else gout.setState(PinState.HIGH);
                             }
 
                         }
