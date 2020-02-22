@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Console;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class LedController {
@@ -23,9 +25,12 @@ public class LedController {
     }
 
     public int x = 0;
+    public List<GpioPinDigital> list = new ArrayList<GpioPinDigital>();
+
 
     public void initialize() {
         for (int i = 0; i < 24; i++) {
+
 
             Pin pin = RaspiPin.getPinByAddress(i);
             GpioPinDigitalInput button = gpio.provisionDigitalInputPin(pin);
@@ -36,6 +41,7 @@ public class LedController {
                     System.out.println("--- Button pressed " + x);
                 }
             });
+            list.add(button);
             x++;
             System.out.println("--- Button created " + x);
         }
