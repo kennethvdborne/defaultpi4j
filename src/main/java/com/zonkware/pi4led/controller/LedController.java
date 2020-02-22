@@ -25,7 +25,7 @@ public class LedController {
     }
 
     public int x = 0;
-    public List<GpioPinDigital> list = new ArrayList<GpioPinDigital>();
+    public List<GpioPin> list = new ArrayList<GpioPin>();
 
 
     public void initialize() {
@@ -33,7 +33,8 @@ public class LedController {
 
 
             Pin pin = RaspiPin.getPinByAddress(i);
-            GpioPinDigitalOutput button = gpio.provisionDigitalOutputPin(pin);
+            PinMode mode = PinMode.DIGITAL_INPUT;
+            GpioPin button = gpio.provisionPin(pin, mode);
             //button.setShutdownOptions(true);
             button.addListener(new GpioPinListenerDigital() {
                 @Override
