@@ -14,7 +14,7 @@ public class LedController {
     private final GpioController gpio = GpioFactory.getInstance();
    // private final GpioPinDigitalInput myButton1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
    // private final GpioPinDigitalOutput led1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyLED", PinState.LOW);
-    private final GpioPinDigitalInput myButton2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_09, PinPullResistance.PULL_DOWN);
+    private final GpioPinDigitalInput myButton2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_09);
     private final GpioPinDigitalOutput led2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07, "MyLED", PinState.LOW);
 
     public LedController() {
@@ -24,7 +24,7 @@ public class LedController {
     public void initialize(){
 
         myButton2.setShutdownOptions(true);
-        led2.setShutdownOptions(true, PinState.LOW);
+        led2.setShutdownOptions(true);
 
         myButton2.addListener(new GpioPinListenerDigital() {
             @Override
