@@ -15,7 +15,8 @@ public class LedController {
    // private final GpioPinDigitalInput myButton1 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
    // private final GpioPinDigitalOutput led1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01, "MyLED", PinState.LOW);
     private final GpioPinDigitalInput myButton2 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_00);
-    private final GpioPinDigitalOutput led2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07);
+    private final GpioPinDigitalInput myButton3 = gpio.provisionDigitalInputPin(RaspiPin.GPIO_07);
+   // private final GpioPinDigitalOutput led2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_07);
 
     public LedController() {
         initialize();
@@ -24,26 +25,31 @@ public class LedController {
     public void initialize(){
 
         myButton2.setShutdownOptions(true);
-        led2.setShutdownOptions(true);
+        //led2.setShutdownOptions(true);
 
         myButton2.addListener(new GpioPinListenerDigital() {
             @Override
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                try {
-                    onOff(led2);
-                    System.out.println("button pressed");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                //onOff(led2);
+                System.out.println("button pressed 2");
             }
         });
+        myButton3.addListener(new GpioPinListenerDigital() {
+            @Override
+            public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
+                //onOff(led2);
+                System.out.println("button pressed 3");
+            }
+        });
+        /*
         try {
             startup();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        */
     }
-
+/*
     private void startup() throws InterruptedException {
         System.out.println("startupsequence");
         for (int i = 0; i < 3; i++) {
@@ -74,5 +80,5 @@ public class LedController {
     public String light() {
         return "OK";
     }
-
+*/
 }
