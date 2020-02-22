@@ -63,7 +63,7 @@ public class LedController {
                 led.addListener(new GpioPinListenerDigital() {
                     @Override
                     public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-                        System.out.println("--- LED ---" + event.getPin());
+                        System.out.println("--- LED ---" + event.getPin() + " + " + event.getState());
                     }
                 });
                 list.add(led);
