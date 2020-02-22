@@ -6,6 +6,8 @@ import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Console;
+
 @RestController
 public class LedController {
 
@@ -29,6 +31,7 @@ public class LedController {
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
                 try {
                     onOff(led2);
+                    System.out.println("button pressed");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -42,6 +45,7 @@ public class LedController {
     }
 
     private void startup() throws InterruptedException {
+        System.out.println("startupsequence");
         for (int i = 0; i < 3; i++) {
             led2.toggle();
             Thread.sleep(400);
