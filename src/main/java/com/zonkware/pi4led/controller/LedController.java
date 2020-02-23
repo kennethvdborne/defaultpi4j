@@ -28,7 +28,6 @@ public class LedController {
     public List<GpioPinDigitalInput> listIn = new ArrayList<GpioPinDigitalInput>();
     public List<GpioPinDigitalOutput> listOut = new ArrayList<GpioPinDigitalOutput>();
 
-
     public void initialize() {
         for (int i = 0; i < 32; i++) {
 
@@ -51,7 +50,7 @@ public class LedController {
                 System.out.println("--- Button created " + button.getPin());
             }
 
-            else {
+            else if (i==23){
                 Pin pin = RaspiPin.getPinByAddress(i);
                 GpioPinDigitalOutput led = gpio.provisionDigitalOutputPin(pin);
                 led.setState(PinState.LOW);
